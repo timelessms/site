@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TimelessMS — Home</title>
+  <meta name="description" content="TimelessMS main hub: Quick Server Info, Skills, and DPS Chart." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <style>
+    :root {
+      --bg: #0b1023;
+      --panel: #0f172a;
+      --card: #111827;
+      --ink: #e5e7eb;
+      --muted: #9aa3b2;
+      --border: #202838;
+      --accent: #7dd3fc;
+      --accent2: #60a5fa;
+      --good: #34d399;
+      --shadow: 0 12px 40px rgba(0,0,0,.35);
+    }
+    @media (prefers-color-scheme: light){
+      :root { --bg:#f7fafc; --panel:#ffffff; --card:#ffffff; --ink:#0f172a; --muted:#475569; --border:#e2e8f0; --accent:#0ea5e9; --accent2:#3b82f6; --good:#059669; --shadow: 0 10px 30px rgba(2,6,23,.08); }
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: radial-gradient(1200px 800px at 10% -10%, rgba(96,165,250,.12), transparent 40%), radial-gradient(1000px 600px at 120% 0%, rgba(56,189,248,.1), transparent 35%), var(--bg); color: var(--ink); font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"; }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 28px 16px 60px; }
+
+    header { display: grid; gap: 8px; margin-bottom: 18px; }
+    .brand { display:flex; align-items:baseline; gap: 10px; }
+    h1 { margin: 0; font-size: clamp(1.7rem, 2.6vw, 2.3rem); letter-spacing: .2px; }
+    .tag { color: var(--good); font-weight: 700; font-size: .9rem; letter-spacing: .4px; text-transform: uppercase; }
+    .sub { color: var(--muted); font-size: .98rem; }
+
+    nav.quick { display:flex; flex-wrap:wrap; gap:8px; margin: 8px 0 14px; }
+    nav.quick a { text-decoration:none; color:inherit; border:1px solid var(--border); background:color-mix(in oklab, var(--panel) 85%, transparent); padding:6px 10px; border-radius:999px; font-size:.9rem; }
+
+    .cards { display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 12px; }
+    @media (max-width: 920px){ .cards { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+    @media (max-width: 640px){ .cards { grid-template-columns: 1fr; } }
+
+    .card { background: linear-gradient(180deg, color-mix(in oklab, var(--card) 92%, transparent), var(--panel)); border: 1px solid var(--border); border-radius: 16px; padding: 18px; box-shadow: var(--shadow); position: relative; overflow:hidden; }
+    .card h2 { margin: 0 0 6px; font-size: 1.15rem; }
+    .card p { margin: 0 0 14px; color: var(--muted); }
+    .card .cta { display:inline-flex; align-items:center; gap:10px; padding:10px 12px; border-radius: 12px; border:1px solid var(--border); background: linear-gradient(180deg, #17233d, #121a2f); color:#dbeafe; font-weight:700; text-decoration:none; }
+    .card .cta:hover { filter: brightness(1.05); }
+    .tagcap { position:absolute; right:14px; top:14px; padding:4px 8px; border-radius:999px; border:1px solid var(--border); background: #0c1426; color:#93c5fd; font-size:.75rem; }
+
+    .grid-2 { display:grid; gap: 16px; grid-template-columns: 1.1fr .9fr; margin-top: 22px; }
+    @media (max-width: 900px){ .grid-2 { grid-template-columns: 1fr; } }
+
+    .panel { background: color-mix(in oklab, var(--panel) 86%, transparent); border:1px solid var(--border); border-radius: 16px; padding: 16px; }
+    .panel h3 { margin: 0 0 8px; font-size: 1.05rem; }
+    .list { display:grid; gap:6px; margin:0; padding-left: 1.1rem; color: var(--muted); }
+    .list li { margin: 0; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; background: color-mix(in oklab, var(--panel) 70%, transparent); padding: 2px 6px; border-radius: 6px; border: 1px solid var(--border); }
+
+    footer { margin-top: 28px; padding-top: 12px; color: var(--muted); font-size: .9rem; display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; border-top:1px dashed var(--border); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <h1>TimelessMS</h1>
+        <span class="tag">Beta</span>
+      </div>
+      <div class="sub">Welcome to the main hub. Jump to Quick Server Info, browse every skill in a searchable list, or compare jobs on the DPS chart.</div>
+      <nav class="quick" aria-label="Quick jump">
+        <a href="serverinfo.html">Server Info</a>
+        <a href="skills.html">Skills</a>
+        <a href="dpschart.html">DPS Chart</a>
+      </nav>
+    </header>
+
+    <section class="cards" aria-label="Main links">
+      <article class="card">
+        <span class="tagcap">Overview</span>
+        <h2>Quick Server Info</h2>
+        <p>EXP brackets, global drops, QoL features, core commands, and Merit + expedition notes—kept tidy and scannable.</p>
+        <a class="cta" href="serverinfo.html" aria-label="Open Quick Server Info">Open Server Info →</a>
+      </article>
+
+      <article class="card">
+        <span class="tagcap">Browse</span>
+        <h2>Skills (All Jobs)</h2>
+        <p>Searchable skill library across Warrior, Magician, Archer, Rogue, Pirate, and Aran. Clean formatting and “Top” links.</p>
+        <a class="cta" href="skills.html" aria-label="Open Skills">Open Skills →</a>
+      </article>
+
+      <article class="card">
+        <span class="tagcap">Compare</span>
+        <h2>DPS Chart</h2>
+        <p>Single- vs Multi-target numbers with sortable columns and CSV export for deeper analysis.</p>
+        <a class="cta" href="dpschart.html" aria-label="Open DPS Chart">Open DPS Chart →</a>
+      </article>
+    </section>
+
+    <div class="grid-2">
+      <section class="panel">
+        <h3>Deploy to GitHub Pages</h3>
+        <ol class="list">
+          <li>Use a repo named <code>timelessms.github.io</code> (Organization/User site).</li>
+          <li>Commit these four files to the repo root: <code>index.html</code>, <code>serverinfo.html</code>, <code>skills.html</code>, <code>dpschart.html</code>.</li>
+          <li>In the repo, go to <strong>Settings → Pages</strong>, set <em>Source</em> to “Deploy from a branch” and choose the <em>main</em> branch <em>/ root</em>.</li>
+          <li>Visit <code>https://timelessms.github.io/</code> for the main page, and the subpages at <code>/serverinfo.html</code>, <code>/skills.html</code>, <code>/dpschart.html</code>.</li>
+        </ol>
+      </section>
+
+      <section class="panel">
+        <h3>Tips</h3>
+        <ul class="list">
+          <li>If you keep the three pages in a subfolder, update the links accordingly (e.g., <code>pages/skills.html</code>).</li>
+          <li>For a project site (not <code>timelessms.github.io</code>), enable Pages and access at <code>https://timelessms.github.io/&lt;repo-name&gt;/</code>. Adjust links to be relative.</li>
+          <li>Add a <code>404.html</code> to auto-redirect to <code>/</code> for unknown paths, if needed.</li>
+        </ul>
+      </section>
+    </div>
+
+    <footer>
+      <div>© TimelessMS</div>
+      <div><a href="serverinfo.html">Server Info</a> • <a href="skills.html">Skills</a> • <a href="dpschart.html">DPS Chart</a></div>
+    </footer>
+  </div>
+</body>
+</html>

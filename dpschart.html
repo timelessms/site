@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TimelessMS — DPS Overview</title>
+  <meta name="description" content="TimelessMS DPS reference (Single-Target & Multi-Target)" />
+  <style>
+    :root {
+      --bg: #0f172a;          /* slate-900 */
+      --panel: #111827;       /* gray-900 */
+      --muted: #9ca3af;       /* gray-400 */
+      --text: #e5e7eb;        /* gray-200 */
+      --accent: #60a5fa;      /* blue-400 */
+      --accent-2: #34d399;    /* emerald-400 */
+      --border: #1f2937;      /* gray-800 */
+      --chip: #0b1324;        /* darker */
+    }
+    html, body { height: 100%; }
+    body { margin: 0; background: linear-gradient(180deg, #0b1023, var(--bg)); color: var(--text); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 24px; }
+
+    header { display:flex; flex-wrap:wrap; align-items:center; gap: 16px; margin-bottom: 18px; }
+    h1 { font-size: clamp(1.4rem, 2.4vw, 2rem); margin: 0; letter-spacing: 0.2px; }
+    .meta { color: var(--muted); font-size: 0.925rem; }
+
+    .controls { display:flex; flex-wrap: wrap; gap: 10px; align-items:center; margin: 14px 0 18px; }
+    .search { position: relative; }
+    .search input { background: var(--panel); color: var(--text); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; min-width: 250px; outline: none; }
+    .btn { background: linear-gradient(180deg, #1f2a44, #16213a); color: #dbeafe; border: 1px solid #1f3a5a; border-radius: 10px; padding: 10px 12px; cursor: pointer; font-weight: 600; }
+    .btn:hover { filter: brightness(1.08); }
+    .btn.ghost { background: transparent; border-color: var(--border); color: var(--text); }
+    .chip { background: var(--chip); border: 1px solid var(--border); border-radius: 999px; padding: 6px 10px; color: var(--muted); font-size: 0.9rem; }
+
+    .table-wrap { background: rgba(17,24,39,0.6); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.35); }
+
+    table { width: 100%; border-collapse: collapse; }
+    thead { background: linear-gradient(180deg, #0e162c, #0b1324); }
+    th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+    th { font-weight: 700; font-size: 0.95rem; color: #bfdbfe; user-select: none; }
+    td { font-size: 0.98rem; }
+    tbody tr:hover { background: rgba(96,165,250,0.06); }
+    th.sortable { cursor: pointer; }
+    th.sortable .dir { opacity: 0.55; font-size: 0.9em; margin-left: 6px; }
+
+    .note { color: var(--muted); font-size: 0.92rem; margin-top: 14px; }
+    footer { margin-top: 28px; color: var(--muted); font-size: 0.85rem; display:flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+    .grid { display: grid; gap: 12px; grid-template-columns: repeat(2, minmax(0,1fr)); }
+    @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } th, td { padding: 10px 12px; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>TimelessMS — DPS Overview</h1>
+      <div class="meta">Last updated: 26 Sep 2025 (GMT+8)</div>
+    </header>
+
+    <div class="controls">
+      <div class="search">
+        <input id="q" type="search" placeholder="Search job or skill…" aria-label="Search" />
+      </div>
+      <button class="btn" id="downloadCsv">Download CSV</button>
+      <span class="chip" id="rowsCount">0 rows</span>
+      <button class="btn ghost" id="resetBtn">Reset</button>
+    </div>
+
+    <div class="table-wrap">
+      <table id="dpsTable">
+        <thead>
+          <tr>
+            <th class="sortable" data-key="job">Job <span class="dir">⇅</span></th>
+            <th>Single Skill</th>
+            <th class="sortable" data-key="singleDps">Single DPS <span class="dir">⇅</span></th>
+            <th>Multi Skill</th>
+            <th class="sortable" data-key="multiDps">Multi DPS <span class="dir">⇅</span></th>
+            <th class="sortable" data-key="targets">Targets <span class="dir">⇅</span></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <p class="note">Note: Buffed with Echo, Speed Infusion, Maple Warrior, Sharp Eyes, Bless. Fully Scrolled Empress Gear.</p>
+    
+
+    <footer>
+      <div>Tip: Click any header with ⇅ to sort. Use the search to filter rows.</div>
+      <div>© TimelessMS</div>
+    </footer>
+  </div>
+
+  <script>
+    const rawData = [
+      { job: 'Corsair',       singleSkill: 'Battleship Cannon+Bullseye', singleDps: '6,200,000',  multiSkill: 'Battleship Torpedo',         multiDps: '15,000,000', targets: 6 },
+      { job: 'Night Lord',    singleSkill: 'Quad Throw',                  singleDps: '6,000,000',  multiSkill: 'Sudden Raid',                multiDps: '15,600,000', targets: 5 },
+      { job: 'Bowmaster',     singleSkill: 'Hurricane',                   singleDps: '5,800,000',  multiSkill: 'Dragon Breath',              multiDps: '16,200,000', targets: 6 },
+      { job: 'Buccaneer',     singleSkill: 'Demolition',                  singleDps: '5,800,000',  multiSkill: 'Dragon Blast + Snatch',      multiDps: '16,200,000', targets: 6 },
+      { job: 'Hero',          singleSkill: 'Blade Tempest',               singleDps: '5,700,000',  multiSkill: 'Brandish',                   multiDps: '16,500,000', targets: 4 },
+      { job: 'Dark Knight',   singleSkill: 'Chaos Skewer',                singleDps: '5,600,000',  multiSkill: 'Dark Impale',                multiDps: '16,800,000', targets: 5 },
+      { job: 'Shadower',      singleSkill: 'Assassinate',                 singleDps: '5,600,000',  multiSkill: 'Boomerang Step + B.O.T.',    multiDps: '16,800,000', targets: 6 },
+      { job: 'Paladin',       singleSkill: 'Righteous Maulstorm',         singleDps: '5,500,000',  multiSkill: 'Blast + Holy charge',        multiDps: '17,100,000', targets: 6 },
+      { job: 'Marksman',      singleSkill: 'Snipe',                       singleDps: '5,400,000',  multiSkill: 'Piercing Arrow',             multiDps: '17,400,000', targets: 4 },
+      { job: 'I/L',           singleSkill: 'Poison Flare',                singleDps: '5,200,000',  multiSkill: 'Blazing Judgement',          multiDps: '18,000,000', targets: 6 },
+      { job: 'F/P',           singleSkill: 'Thunderclap',                 singleDps: '5,200,000',  multiSkill: 'Ice Age',                    multiDps: '18,000,000', targets: 6 },
+      { job: 'Bishop',        singleSkill: 'Angel Ray',                   singleDps: '5,000,000',  multiSkill: 'Angelic Buster',             multiDps: '18,600,000', targets: 6 },
+      { job: 'Aran',          singleSkill: 'Overswing + Final Blow',      singleDps: '5,600,000',  multiSkill: 'Overswing + Final Blow',     multiDps: '20,000,000', targets: 8 },
+      { job: 'Super Beginner',singleSkill: 'Mop Swinging',                singleDps: '9,000,000',  multiSkill: '',                           multiDps: '',          targets: '' },
+    ];
+
+    const tbody = document.querySelector('#dpsTable tbody');
+    const q = document.querySelector('#q');
+    const rowsCount = document.querySelector('#rowsCount');
+
+    function parseNumber(str) {
+      if (typeof str === 'number') return str;
+      if (!str) return NaN;
+      return Number(String(str).replace(/[^0-9.-]/g, ''));
+    }
+
+    function render(data) {
+      tbody.innerHTML = data.map(r => `
+        <tr>
+          <td>${r.job || '—'}</td>
+          <td>${r.singleSkill || '—'}</td>
+          <td data-sort="${parseNumber(r.singleDps)}">${r.singleDps || '—'}</td>
+          <td>${r.multiSkill || '—'}</td>
+          <td data-sort="${parseNumber(r.multiDps)}">${r.multiDps || '—'}</td>
+          <td data-sort="${Number.isFinite(+r.targets) ? r.targets : -1}">${r.targets || '—'}</td>
+        </tr>`).join('');
+      rowsCount.textContent = `${data.length} row${data.length === 1 ? '' : 's'}`;
+    }
+
+    // initial
+    let current = [...rawData];
+    render(current);
+
+    // search
+    q.addEventListener('input', () => {
+      const v = q.value.trim().toLowerCase();
+      current = rawData.filter(r =>
+        [r.job, r.singleSkill, r.singleDps, r.multiSkill, r.multiDps, String(r.targets)]
+          .filter(Boolean)
+          .some(x => String(x).toLowerCase().includes(v))
+      );
+      render(current);
+    });
+
+    // reset
+    document.querySelector('#resetBtn').addEventListener('click', () => {
+      q.value = '';
+      current = [...rawData];
+      render(current);
+      // clear sort indicators
+      document.querySelectorAll('th.sortable').forEach(th => th.dataset.dir = '');
+    });
+
+    // sorting
+    const ths = document.querySelectorAll('th.sortable');
+    ths.forEach(th => {
+      th.addEventListener('click', () => {
+        const key = th.dataset.key;
+        const dir = th.dataset.dir === 'asc' ? 'desc' : 'asc';
+        ths.forEach(t => t.dataset.dir = '');
+        th.dataset.dir = dir;
+
+        const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
+        current.sort((a, b) => {
+          let av, bv;
+          if (key === 'singleDps') { av = parseNumber(a.singleDps); bv = parseNumber(b.singleDps); }
+          else if (key === 'multiDps') { av = parseNumber(a.multiDps); bv = parseNumber(b.multiDps); }
+          else if (key === 'targets') { av = Number.isFinite(+a.targets) ? +a.targets : -1; bv = Number.isFinite(+b.targets) ? +b.targets : -1; }
+          else { av = a[key] ?? ''; bv = b[key] ?? ''; }
+          const cmp = (typeof av === 'number' && typeof bv === 'number') ? (av - bv) : collator.compare(String(av), String(bv));
+          return dir === 'asc' ? cmp : -cmp;
+        });
+        render(current);
+      });
+    });
+
+    // CSV download
+    function toCsvValue(v) {
+      if (v == null) return '';
+      const s = String(v);
+      return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+    }
+    document.getElementById('downloadCsv').addEventListener('click', () => {
+      const head = ['Job','Single Skill','Single DPS','Multi Skill','Multi DPS','Targets'];
+      const rows = current.map(r => [r.job, r.singleSkill, r.singleDps, r.multiSkill, r.multiDps, r.targets]);
+      const csv = [head, ...rows].map(row => row.map(toCsvValue).join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'timelessms-dps.csv';
+      document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+    });
+  </script>
+</body>
+
+</html>

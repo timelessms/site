@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>TimelessMS — Quick Server Info</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root{
+      --bg:#0f1115;--fg:#e5e7eb;--muted:#9aa3b2;--card:#151923;--accent:#7dd3fc;
+      --border:#232838;--chip:#1e2432;--mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    @media (prefers-color-scheme: light){
+      :root{ --bg:#f8fafc; --fg:#0f172a; --muted:#475569; --card:#ffffff; --border:#e2e8f0; --chip:#eef2f7; }
+    }
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font:16px/1.6 var(--sans);}
+    .wrap{max-width:1000px;margin:32px auto;padding:0 16px 64px;}
+    header{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline;margin-bottom:16px}
+    h1{font-size:clamp(1.6rem,2.5vw,2rem);margin:0}
+    .updated{color:var(--muted);font-size:.95rem}
+
+    /* Sticky menu */
+    nav{
+      position: sticky; top: 0; z-index: 50;
+      display:flex;flex-wrap:wrap;gap:8px;
+      margin:12px -16px 24px; padding:10px 16px;
+      background: color-mix(in oklab, var(--bg) 85%, transparent);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--border);
+    }
+    nav a{padding:6px 10px;border:1px solid var(--border);border-radius:10px;background:var(--chip);text-decoration:none;color:inherit;font-size:.9rem}
+
+    section{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 18px 12px;margin:14px 0; scroll-margin-top:72px;}
+    h2{margin:0 0 8px;font-size:1.05rem;border-left:4px solid var(--accent);padding-left:10px}
+    ul{margin:8px 0 4px 1.1rem}
+    li+li{margin-top:4px}
+    .mono{font-family:var(--mono);background:var(--chip);padding:1px 6px;border-radius:6px}
+    .cols{display:grid;gap:8px}
+    @media (min-width:720px){ .cols{grid-template-columns:repeat(2,1fr);} }
+    footer{margin-top:20px;color:var(--muted);font-size:.9rem}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>TimelessMS — Quick Server Info</h1>
+      <span class="updated">Last updated: <strong>26 Sep 2025 (GMT+8)</strong></span>
+    </header>
+
+    <nav aria-label="On this page">
+      <a href="#exp">EXP Rates</a>
+      <a href="#drops">Global Drops</a>
+      <a href="#npcs">Key NPCs</a>
+	  <a href="#casino">Casino NPCs</a>
+      <a href="#qol">Quality of Life</a>
+      <a href="#cmds">Player Commands</a>
+      <a href="#merit">Merit System</a>
+      <a href="#exped">Expeditions</a>
+    </nav>
+
+    <section id="exp">
+      <h2>EXP Rates</h2>
+      <ul>
+        <li><strong>Lv 1–30:</strong> 5×</li>
+        <li><strong>Lv 31–70:</strong> 4×</li>
+        <li><strong>Lv 71–120:</strong> 3×</li>
+        <li><strong>Lv 121–199:</strong> 2×</li>
+        <li><strong>Lv 200:</strong> 1×</li>
+      </ul>
+    </section>
+
+    <section id="drops">
+      <h2>Global Drops</h2>
+      <ul class="cols">
+        <li>Chaos Scrolls</li>
+        <li>White Scrolls</li>
+        <li>Clean Slate Scrolls 5% &amp; 20%</li>
+        <li>Blessing Orb</li>
+        <li>Gachapon Ticket</li>
+        <li>Item / Super Megaphone</li>
+        <li>100 / 250 NX Card</li>
+        <li>Onyx Apple</li>
+        <li>Subani</li>
+      </ul>
+    </section>
+
+    <section id="npcs">
+      <h2>Key NPCs (Free Market)</h2>
+      <ul class="cols">
+        <li><strong>Darius</strong> — Donation Code</li>
+        <li><strong>Chester</strong> — Donation Shop</li>
+        <li><strong>Tang San Zhang</strong> — Vote claims: NX, Vote Points, and vote-point redemptions.</li>
+        <li><strong>Captain Undertable</strong> — Name Changer</li>
+        <li><strong>Loki</strong> — Chaos Scroll Exchange (live market). Also via <span class="mono">@Loki</span>.</li>
+        <li><strong>Navi</strong> — Warps to major towns &amp; boss/zone entrances. Also via <span class="mono">@Navi</span>.</li>
+        <li><strong>Celeste</strong> — Item shop</li>
+        <li><strong>Eduardo</strong> — Donator Stylist</li>
+        <li><strong>Luella</strong> — Regular Stylist</li>
+        <li><strong>Cecilia</strong> — Cosmetic Saver</li>
+        <li><strong>George</strong> — Bulk Sell (also via <span class="mono">@sellall</span>).</li>
+        <li><strong>Erza</strong> — Blessing Orb Exchanger</li>
+        <li><strong>Obrin</strong> — Boss/ETC/global item exchanger</li>
+        <li><strong>Bob</strong> — Coupon Seller</li>
+        <li><strong>CSY</strong> — Innocence service; Unbind equipment/chairs</li>
+        <li><strong>Lina (Jobstreet)</strong> — Job changer (Level 120+)</li>
+        <li><strong>Server Admin</strong> — Mega buffs (also via <span class="mono">@buybuff</span>)</li>
+        <li><strong>Manji</strong> — Daily Kill Quest</li>
+        <li><strong>VIP Gachapon</strong> — Chairs / Pets / NX Items</li>
+      </ul>
+    </section>
+	
+	    <section id="casino">
+      <h2>Casino NPCs (Free Market)</h2>
+      <ul class="cols">
+        <li><strong>Chow Yun Fat</strong> — Blackjack</li>
+        <li><strong>Andy Lau</strong> — Baccarat</li>
+        <li><strong>Stephen Chow</strong> — Dice</li>
+        <li><strong>Jacky Cheung</strong> — Minesweeper</li>
+        <li><strong>Leon Lai</strong> — Roulette</li>
+        <li><strong>Aaron Kwok</strong> — Slot Machine</li>
+      </ul>
+      <p><em>Bet and win Chaos Scroll.</em></p>
+    </section>
+
+    <section id="qol">
+      <h2>Quality of Life</h2>
+      <ul>
+        <li><strong>Stacks:</strong> Use/ETC stack up to <strong>9,999</strong> per slot.</li>
+        <li><strong>No Breath:</strong> CC / enter FM immediately after combat.</li>
+        <li><strong>Persistence:</strong> Buffs persist on DC; expedition recall windows &amp; reconnect grace after clear.</li>
+        <li><strong>Input &amp; Chat:</strong> PIC is typable; chat censorship removed.</li>
+        <li><strong>Fishing:</strong> <span class="mono">@fish</span> at FM (Lv150); exchange via Obrin.</li>
+        <li><strong>Movement:</strong> Attack while moving; Double Jump enabled (press <span class="mono">F12</span> to toggle OFF for flying mobs).</li>
+      </ul>
+    </section>
+
+    <section id="cmds">
+      <h2>Player Commands (high value)</h2>
+      <ul>
+        <li><span class="mono">@wd</span> / <span class="mono">@whodrops</span>, <span class="mono">@wdf</span> / <span class="mono">@whatdropsfrom</span> — Drop lookups (with tooltips &amp; %).</li>
+        <li><span class="mono">@sellall</span> — Bulk sell (with recovery &amp; protections).</li>
+        <li><span class="mono">@mylawn</span> — Claim map ownership (incl. in boss maps).</li>
+        <li><span class="mono">@buybuff</span> — Purchase buffs (<em>disabled inside expeditions</em>).</li>
+        <li><span class="mono">@votenpc</span> — Open Vote NPC (<em>disabled inside expeditions</em>).</li>
+        <li><span class="mono">@miumiu</span> — Open Miu Miu (incl. expeditions).</li>
+        <li><span class="mono">@password</span>, <span class="mono">@pic</span> — Change account password / PIC.</li>
+        <li><span class="mono">@unstuck</span> — Move a character on same account to Henesys.</li>
+        <li><span class="mono">@merit</span> — View Merit progress.</li>
+        <li><span class="mono">@bosslog</span> — See boss attempts.</li>
+        <li><span class="mono">@gfx</span> — Hide others’ skills/damage counters.</li>
+        <li><span class="mono">@roll</span> — Party loot roll (1–100).</li>
+        <li><span class="mono">@points</span> — Show DP / VP.</li>
+        <li><span class="mono">@Navi</span>, <span class="mono">@Loki</span>, <span class="mono">@Bob</span> — Open those NPCs directly.</li>
+        <li><span class="mono">@dps</span> — Toggle on-screen DPS test/leaderboard.</li>
+        <li><span class="mono">@revive</span> — Consume Wheel of Destiny to revive on the spot (for bugged revive cases).</li>
+        <li><span class="mono">@bosstime</span> — Check boss timers (requires Bosswatch Crystal Ball item).</li>
+        <li><span class="mono">@gamble</span> — Gamble Chaos Scrolls with another player.</li>
+        <li><span class="mono">@fish</span> — Fish at the Free Market (Level 150+).</li>
+        <li><span class="mono">@dq</span> / <span class="mono">@dailyquest</span> — Open Daily Quest Menu.</li>
+      </ul>
+    </section>
+
+    <section id="merit">
+      <h2>Merit System (Lv 200+)</h2>
+      <ul>
+        <li>Post-200 EXP converts to <strong>Merit EXP</strong>.</li>
+        <li><strong>Requirement:</strong> Next Merit level needs <em>(next level × 100,000,000)</em> EXP.</li>
+        <li><strong>Cap:</strong> Merit Level <strong>1,000</strong>.</li>
+        <li><strong>Reward:</strong> +1 Ability Point per Merit Level.</li>
+        <li>Track with <span class="mono">@merit</span>.</li>
+      </ul>
+    </section>
+
+    <section id="exped">
+      <h2>Expeditions (overview)</h2>
+      <ul>
+        <li><strong>Entry Limits:</strong>
+          <ul>
+            <li><strong>Daily 1×:</strong> Zakum, Krexel, Scarga, Horntail.</li>
+            <li><strong>Weekly 1×:</strong> The Boss, Pink Bean, Chaos Zakum, Chaos Horntail, Von Leon, Empress.</li>
+          </ul>
+        </li>
+        <li><strong>Reconnection grace:</strong> 5 minutes if all members disconnect.</li>
+        <li><strong>Post-clear grace:</strong> Expedition ends 2 minutes after CLEAR; disconnected players can rejoin to loot within the window.</li>
+      </ul>
+    </section>
+
+    <footer>
+      Tip: Use the in-game <span class="mono">updater.exe</span> whenever possible; only grab full clients when explicitly required.
+    </footer>
+  </div>
+</body>
+</html>
