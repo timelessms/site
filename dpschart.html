@@ -49,8 +49,32 @@
     .grid { display: grid; gap: 12px; grid-template-columns: repeat(2, minmax(0,1fr)); }
     @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } th, td { padding: 10px 12px; } }
   </style>
+
+  <style>
+    .tm-nav{position:sticky;top:0;z-index:50;background:rgba(10,15,30,.8);backdrop-filter:saturate(140%) blur(10px);
+      border-bottom:1px solid rgba(148,163,184,.18);}
+    .tm-wrap{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center;justify-content:space-between;}
+    .tm-brand{font-weight:800;letter-spacing:.3px}
+    .tm-links{display:flex;gap:8px;flex-wrap:wrap}
+    .tm-links a{color:inherit;text-decoration:none;border:1px solid rgba(148,163,184,.25);padding:6px 10px;border-radius:999px;font-size:.92rem}
+    .tm-links a:hover{filter:brightness(1.1)}
+  </style>
+
 </head>
 <body>
+
+  <nav class="tm-nav">
+    <div class="tm-wrap">
+      <div class="tm-brand">TimelessMS</div>
+      <div class="tm-links">
+        <a href="serverinfo.html">Server Info</a>
+        <a href="skills.html">Skills</a>
+        <a href="dpschart.html">DPS Chart</a>
+        <a href="index.html" title="Home">Home</a>
+      </div>
+    </div>
+  </nav>
+
   <div class="wrap">
     <header>
       <h1>TimelessMS — DPS Overview</h1>
