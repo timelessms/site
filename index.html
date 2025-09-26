@@ -6,92 +6,130 @@
   <title>TimelessMS — Home</title>
   <meta name="description" content="TimelessMS main hub: Quick Server Info, Skills, and DPS Chart." />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <style>
-    :root {
-      --bg: #0b1023;
-      --panel: #0f172a;
-      --card: #111827;
-      --ink: #e5e7eb;
-      --muted: #9aa3b2;
-      --border: #202838;
-      --accent: #7dd3fc;
-      --accent2: #60a5fa;
-      --good: #34d399;
-      --shadow: 0 12px 40px rgba(0,0,0,.35);
-    }
-    @media (prefers-color-scheme: light){
-      :root { --bg:#f7fafc; --panel:#ffffff; --card:#ffffff; --ink:#0f172a; --muted:#475569; --border:#e2e8f0; --accent:#0ea5e9; --accent2:#3b82f6; --good:#059669; --shadow: 0 10px 30px rgba(2,6,23,.08); }
-    }
-    * { box-sizing: border-box; }
-    html, body { margin: 0; background: radial-gradient(1200px 800px at 10% -10%, rgba(96,165,250,.12), transparent 40%), radial-gradient(1000px 600px at 120% 0%, rgba(56,189,248,.1), transparent 35%), var(--bg); color: var(--ink); font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"; }
-    .wrap { max-width: 1100px; margin: 0 auto; padding: 28px 16px 60px; }
+  
 
-    header { display: grid; gap: 8px; margin-bottom: 18px; }
-    .brand { display:flex; align-items:baseline; gap: 10px; }
-    h1 { margin: 0; font-size: clamp(1.7rem, 2.6vw, 2.3rem); letter-spacing: .2px; }
-    .tag { color: var(--good); font-weight: 700; font-size: .9rem; letter-spacing: .4px; text-transform: uppercase; }
-    .sub { color: var(--muted); font-size: .98rem; }
+  
 
-    nav.quick { display:flex; flex-wrap:wrap; gap:8px; margin: 8px 0 14px; }
-    nav.quick a { text-decoration:none; color:inherit; border:1px solid var(--border); background:color-mix(in oklab, var(--panel) 85%, transparent); padding:6px 10px; border-radius:999px; font-size:.9rem; }
 
-    .cards { display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 12px; }
-    @media (max-width: 920px){ .cards { grid-template-columns: repeat(2, minmax(0,1fr)); } }
-    @media (max-width: 640px){ .cards { grid-template-columns: 1fr; } }
 
-    .card { background: linear-gradient(180deg, color-mix(in oklab, var(--card) 92%, transparent), var(--panel)); border: 1px solid var(--border); border-radius: 16px; padding: 18px; box-shadow: var(--shadow); position: relative; overflow:hidden; }
-    .card h2 { margin: 0 0 6px; font-size: 1.15rem; }
-    .card p { margin: 0 0 14px; color: var(--muted); }
-    .card .cta { display:inline-flex; align-items:center; gap:10px; padding:10px 12px; border-radius: 12px; border:1px solid var(--border); background: linear-gradient(180deg, #17233d, #121a2f); color:#dbeafe; font-weight:700; text-decoration:none; }
-    .card .cta:hover { filter: brightness(1.05); }
-    .tagcap { position:absolute; right:14px; top:14px; padding:4px 8px; border-radius:999px; border:1px solid var(--border); background: #0c1426; color:#93c5fd; font-size:.75rem; }
 
-    .grid-2 { display:grid; gap: 16px; grid-template-columns: 1.1fr .9fr; margin-top: 22px; }
-    @media (max-width: 900px){ .grid-2 { grid-template-columns: 1fr; } }
 
-    .panel { background: color-mix(in oklab, var(--panel) 86%, transparent); border:1px solid var(--border); border-radius: 16px; padding: 16px; }
-    .panel h3 { margin: 0 0 8px; font-size: 1.05rem; }
-    .list { display:grid; gap:6px; margin:0; padding-left: 1.1rem; color: var(--muted); }
-    .list li { margin: 0; }
-    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; background: color-mix(in oklab, var(--panel) 70%, transparent); padding: 2px 6px; border-radius: 6px; border: 1px solid var(--border); }
 
-    footer { margin-top: 28px; padding-top: 12px; color: var(--muted); font-size: .9rem; display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; border-top:1px dashed var(--border); }
-  </style>
+
+
+<style>
+:root{
+  --bg: #0b0f1a;
+  --panel:#0f172a;
+  --ink:#f8fafc;
+  --muted:#cbd5e1;
+  --border:#243047;
+  --accent:#ff7a00; --accent2:#f59e0b; --accent3:#ef4444; --accent4:#60a5fa;
+  --shadow: 0 18px 50px rgba(0,0,0,.35);
+}
+@media (prefers-color-scheme: light){
+  :root{ --bg:#f5f7fb; --panel:#ffffff; --ink:#0b1220; --muted:#475569; --border:#e2e8f0;
+    --accent:#e76f00; --accent2:#d97706; --accent3:#dc2626; --accent4:#3b82f6; --shadow:0 12px 38px rgba(2,6,23,.08); }
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;}
+a{color:inherit}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 16px 60px}
+/* Top Nav */
+.tm-nav{position:sticky;top:0;z-index:100;background:rgba(12,16,30,.9);backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--border);}
+.tm-row{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center;justify-content:space-between;}
+.tm-brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.3px;color:#fff}
+.tm-dot{width:10px;height:10px;border-radius:50%;background:conic-gradient(from 0deg, var(--accent), var(--accent2), var(--accent3), var(--accent4)); box-shadow:0 0 12px rgba(255,122,0,.8)}
+.tm-links{display:flex;gap:8px;flex-wrap:wrap}
+.tm-links a{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.22);padding:6px 10px;border-radius:999px;font-size:.92rem;background:linear-gradient(180deg,#17233d,#121a2f)}
+.tm-links a:hover{filter:brightness(1.08)}
+/* Hero */
+.hero{display:grid;gap:8px;margin:10px 0 8px;grid-template-columns:1fr;align-items:center}
+.hero h1{margin:0;font-size:clamp(1.6rem,3.2vw,2.2rem)}
+.hero .sub{color:var(--muted);max-width:65ch}
+.badge{display:inline-flex;gap:8px;align-items:center;font-weight:800;color:#fff;background:linear-gradient(90deg,var(--accent),var(--accent2));
+  border-radius:999px;padding:6px 10px;box-shadow:var(--shadow);}
+/* Quick pills */
+nav.quick{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 16px}
+nav.quick a{text-decoration:none;color:#fff;border:1px solid rgba(255,255,255,.22);background:linear-gradient(180deg,#17233d,#121a2f);padding:6px 10px;border-radius:999px;font-size:.9rem}
+nav.quick a:hover{filter:brightness(1.08)}
+/* Panels & Cards */
+.panel{background:linear-gradient(180deg, color-mix(in oklab, var(--panel) 90%, transparent), var(--panel)); border:1px solid var(--border); border-radius:16px; padding:16px; box-shadow: var(--shadow);}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:12px}
+@media (max-width:920px){ .cards{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:640px){ .cards{grid-template-columns:1fr} }
+.card h2{margin:0 0 6px;font-size:1.12rem}
+.card p{margin:0 0 10px;color:var(--muted)}
+.card .cta{display:inline-flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid var(--border);
+  background:linear-gradient(180deg,#17233d,#121a2f);color:#dbeafe;font-weight:700;text-decoration:none}
+/* Tables */
+.tm-table{width:100%; border-collapse: separate; border-spacing:0; overflow:hidden; border:1px solid var(--border); border-radius:14px; background: color-mix(in oklab, var(--panel) 90%, transparent); box-shadow: var(--shadow);}
+.tm-table thead th{position:sticky; top:0; background:linear-gradient(180deg,#18233c,#121a2f); color:#e5edff; text-align:left; padding:10px 12px; font-weight:800; border-bottom:1px solid var(--border);}
+.tm-table tbody td{padding:10px 12px; border-bottom:1px dashed var(--border); color:var(--ink)}
+.tm-table tbody tr:hover{background:rgba(96,165,250,.06)}
+/* Utilities */
+.muted{color:var(--muted)}
+footer{margin-top:28px;padding-top:12px;color:var(--muted);font-size:.9rem;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;border-top:1px dashed var(--border)}
+</style>
+
+<style id="nav-unify">
+/* Unify top nav to match Server Info */
+.tm-nav{position:sticky;top:0;z-index:100;background:rgba(12,16,30,.9);backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--border);}
+.tm-row{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center;justify-content:space-between;}
+.tm-brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.3px;color:#fff}
+.tm-dot{width:10px;height:10px;border-radius:50%;background:conic-gradient(from 0deg, var(--accent), var(--accent2), var(--accent3), var(--accent4)); box-shadow:0 0 12px rgba(255,122,0,.8)}
+.tm-links{display:flex;gap:8px;flex-wrap:wrap}
+.tm-links a{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.22);padding:6px 10px;border-radius:999px;font-size:.92rem;background:linear-gradient(180deg,#17233d,#121a2f)}
+.tm-links a:hover{filter:brightness(1.08)}
+.tm-links a{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.22);padding:6px 10px;border-radius:999px;font-size:.92rem;background:linear-gradient(180deg,#17233d,#121a2f)}
+.tm-links a:hover{filter:brightness(1.08)}
+.tm-links a:hover{filter:brightness(1.08)}
+</style>
 </head>
 <body>
-  <div class="wrap">
+
+<nav class="tm-nav">
+  <div class="tm-row">
+    <div class="tm-brand"><span class="tm-dot"></span> TimelessMS</div>
+    <div class="tm-links">
+      <a href="index.html">Home</a>
+      <a href="serverinfo.html">Server Info</a>
+      <a href="skills.html">Skills</a>
+      <a href="dpschart.html">DPS Chart</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap"><section class="panel">
+
+
+  
+
+    <div class="wrap">
     <header>
       <div class="brand">
         <h1>TimelessMS</h1>
         <span class="tag">Beta</span>
       </div>
       <div class="sub">Welcome to the main hub. Jump to Quick Server Info, browse every skill in a searchable list, or compare jobs on the DPS chart.</div>
-      <nav class="quick" aria-label="Quick jump">
-        <a href="serverinfo.html">Server Info</a>
-        <a href="skills.html">Skills</a>
-        <a href="dpschart.html">DPS Chart</a>
-      </nav>
-    </header>
+      </header>
 
     <section class="cards" aria-label="Main links">
       <article class="card">
-        <span class="tagcap">Overview</span>
-        <h2>Quick Server Info</h2>
-        <p>EXP brackets, global drops, QoL features, core commands, and Merit + expedition notes—kept tidy and scannable.</p>
+        
+        <h2>Quick Server Info</h2><p>Core rates, drop highlights, useful NPCs, and handy commands in one spot.</p>
         <a class="cta" href="serverinfo.html" aria-label="Open Quick Server Info">Open Server Info →</a>
       </article>
 
       <article class="card">
-        <span class="tagcap">Browse</span>
-        <h2>Skills (All Jobs)</h2>
-        <p>Searchable skill library across Warrior, Magician, Archer, Rogue, Pirate, and Aran. Clean formatting and “Top” links.</p>
+        
+        <h2>Skills (All Jobs)</h2><p>Search and browse skills by job with clean, readable descriptions.</p>
         <a class="cta" href="skills.html" aria-label="Open Skills">Open Skills →</a>
       </article>
 
       <article class="card">
-        <span class="tagcap">Compare</span>
-        <h2>DPS Chart</h2>
-        <p>Single- vs Multi-target numbers with sortable columns and CSV export for deeper analysis.</p>
+        
+        <h2>DPS Chart</h2><p>Compare single‑target and multi‑target performance across classes.</p>
         <a class="cta" href="dpschart.html" aria-label="Open DPS Chart">Open DPS Chart →</a>
       </article>
     </section>
@@ -102,3 +140,10 @@
   </div>
 </body>
 </html>
+
+</section></div>
+
+<div class="wrap">
+  
+</div>
+

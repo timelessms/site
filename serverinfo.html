@@ -19,15 +19,7 @@
     h1{font-size:clamp(1.6rem,2.5vw,2rem);margin:0}
     .updated{color:var(--muted);font-size:.95rem}
 
-    /* Sticky menu */
-    nav{
-      position: sticky; top: 0; z-index: 50;
-      display:flex;flex-wrap:wrap;gap:8px;
-      margin:12px -16px 24px; padding:10px 16px;
-      background: color-mix(in oklab, var(--bg) 85%, transparent);
-      backdrop-filter: blur(6px);
-      border-bottom: 1px solid var(--border);
-    }
+    /* Sticky menu removed for on-page list; tm-nav is handled elsewhere */
     nav a{padding:6px 10px;border:1px solid var(--border);border-radius:10px;background:var(--chip);text-decoration:none;color:inherit;font-size:.9rem}
 
     section{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 18px 12px;margin:14px 0; scroll-margin-top:72px;}
@@ -40,30 +32,136 @@
     footer{margin-top:20px;color:var(--muted);font-size:.9rem}
   </style>
 
-  <style>
-    .tm-nav{position:sticky;top:0;z-index:50;background:rgba(10,15,30,.8);backdrop-filter:saturate(140%) blur(10px);
-      border-bottom:1px solid rgba(148,163,184,.18);}
-    .tm-wrap{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center;justify-content:space-between;}
-    .tm-brand{font-weight:800;letter-spacing:.3px}
-    .tm-links{display:flex;gap:8px;flex-wrap:wrap}
-    .tm-links a{color:inherit;text-decoration:none;border:1px solid rgba(148,163,184,.25);padding:6px 10px;border-radius:999px;font-size:.92rem}
-    .tm-links a:hover{filter:brightness(1.1)}
-  </style>
+<style>
+/* Offset anchor jump to account for sticky top nav + sticky quick pills */
+h2[id], h3[id]{ scroll-margin-top: 128px; } /* adjust if your navbar heights change */
+</style>
+
+
+<style>
+:root{
+  --bg: #0b0f1a;
+  --panel:#0f172a;
+  --ink:#f8fafc;
+  --muted:#cbd5e1;
+  --border:#243047;
+  --accent:#ff7a00; --accent2:#f59e0b; --accent3:#ef4444; --accent4:#60a5fa;
+  --shadow: 0 18px 50px rgba(0,0,0,.35);
+}
+@media (prefers-color-scheme: light){
+  :root{ --bg:#f5f7fb; --panel:#ffffff; --ink:#0b1220; --muted:#475569; --border:#e2e8f0;
+    --accent:#e76f00; --accent2:#d97706; --accent3:#dc2626; --accent4:#3b82f6; --shadow:0 12px 38px rgba(2,6,23,.08); }
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;}
+a{color:inherit}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 16px 60px}
+/* Top Nav */
+.tm-nav{position:sticky;top:0;z-index:100;background:rgba(12,16,30,.9);backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--border);}
+.tm-row{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center;justify-content:space-between;}
+.tm-brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.3px;color:#fff}
+.tm-dot{width:10px;height:10px;border-radius:50%;background:conic-gradient(from 0deg, var(--accent), var(--accent2), var(--accent3), var(--accent4)); box-shadow:0 0 12px rgba(255,122,0,.8)}
+.tm-links{display:flex;gap:8px;flex-wrap:wrap}
+.tm-links a{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.22);padding:6px 10px;border-radius:999px;font-size:.92rem;background:linear-gradient(180deg,#17233d,#121a2f)}
+.tm-links a:hover{filter:brightness(1.08)}
+/* Panels & Tables (shared helpers) */
+.panel{background:linear-gradient(180deg, color-mix(in oklab, var(--panel) 90%, transparent), var(--panel)); border:1px solid var(--border); border-radius:16px; padding:16px; box-shadow: var(--shadow);}
+.tm-table{width:100%; border-collapse: separate; border-spacing:0; overflow:hidden; border:1px solid var(--border); border-radius:14px; background: color-mix(in oklab, var(--panel) 90%, transparent); box-shadow: var(--shadow);}
+.tm-table thead th{position:sticky; top:0; background:linear-gradient(180deg,#18233c,#121a2f); color:#e5edff; text-align:left; padding:10px 12px; font-weight:800; border-bottom:1px solid var(--border);}
+.tm-table tbody td{padding:10px 12px; border-bottom:1px dashed var(--border); color:var(--ink)}
+.tm-table tbody tr:hover{background:rgba(96,165,250,.06)}
+</style>
+
+<style id="nav-unify">
+/* Unify top nav to match Server Info */
+.tm-nav{position:sticky;top:0;z-index:100;background:rgba(12,16,30,.9);backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--border);}
+.tm-row{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center;justify-content:space-between;}
+.tm-brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.3px;color:#fff}
+.tm-dot{width:10px;height:10px;border-radius:50%;background:conic-gradient(from 0deg, var(--accent), var(--accent2), var(--accent3), var(--accent4)); box-shadow:0 0 12px rgba(255,122,0,.8)}
+.tm-links{display:flex;gap:8px;flex-wrap:wrap}
+.tm-links a{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.22);padding:6px 10px;border-radius:999px;font-size:.92rem;background:linear-gradient(180deg,#17233d,#121a2f)}
+.tm-links a:hover{filter:brightness(1.08)}
+.tm-links a{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.22);padding:6px 10px;border-radius:999px;font-size:.92rem;background:linear-gradient(180deg,#17233d,#121a2f)}
+.tm-links a:hover{filter:brightness(1.08)}
+.tm-links a:hover{filter:brightness(1.08)}
+</style>
+
+<style>
+/* Sticky in-page quick nav (below the top site nav) */
+nav.quick[aria-label="On this page"]{
+  position: sticky;
+  top: 64px; /* adjust if your top nav height changes */
+  z-index: 95;
+  background: rgba(12,16,30,.85);
+  backdrop-filter: saturate(140%) blur(6px);
+  padding: 8px 10px;
+  margin-top: 8px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+nav.quick[aria-label="On this page"] a{ color:#fff; border-color: rgba(255,255,255,.22); }
+/* Offset anchor jump so content isn't hidden under sticky elements */
+h2[id], h3[id]{ scroll-margin-top: 128px; }
+</style>
+
+
+<style>
+/* Make the in-page "On this page" nav non-sticky */
+nav[aria-label="On this page"]{
+  position: static !important;
+  top: auto !important;
+  background: transparent;
+  backdrop-filter: none;
+  border: none;
+  margin: 12px 0 16px;
+  padding: 0;
+}
+nav[aria-label="On this page"] a{
+  text-decoration: none;
+  display: inline-block;
+  margin: 0 6px 6px 0;
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+/* Keep anchor jump tidy (in case any sticky remains elsewhere) */
+h2[id], h3[id]{ scroll-margin-top: 72px; }
+.to-top{ margin: 10px 0 0; }
+.to-top a{ text-decoration:none; border:1px solid var(--border); padding:6px 10px; border-radius:10px; display:inline-block; }
+</style>
+
+
+<style>
+/* Inline "Back to top" button inside sections (bottom-right) */
+section{ position: relative; padding-bottom: 42px; }
+.to-top-btn{
+  position: absolute; right: 12px; bottom: 10px;
+  font-size: .85rem; line-height: 1;
+  padding: 6px 10px; border-radius: 10px;
+  border: 1px solid var(--border);
+  text-decoration: none;
+  background: linear-gradient(180deg,#17233d,#121a2f);
+  color: #dbeafe;
+  opacity: .85;
+}
+.to-top-btn:hover{ opacity: 1; filter: brightness(1.06); }
+</style>
 
 </head>
 <body>
+<a id="top"></a>
 
-  <nav class="tm-nav">
-    <div class="tm-wrap">
-      <div class="tm-brand">TimelessMS</div>
-      <div class="tm-links">
-        <a href="serverinfo.html">Server Info</a>
-        <a href="skills.html">Skills</a>
-        <a href="dpschart.html">DPS Chart</a>
-        <a href="index.html" title="Home">Home</a>
-      </div>
+<nav class="tm-nav">
+  <div class="tm-row">
+    <div class="tm-brand"><span class="tm-dot"></span> TimelessMS</div>
+    <div class="tm-links">
+      <a href="index.html">Home</a>
+      <a href="serverinfo.html">Server Info</a>
+      <a href="skills.html">Skills</a>
+      <a href="dpschart.html">DPS Chart</a>
     </div>
-  </nav>
+  </div>
+</nav>
 
   <div class="wrap">
     <header>
@@ -91,7 +189,7 @@
         <li><strong>Lv 121–199:</strong> 2×</li>
         <li><strong>Lv 200:</strong> 1×</li>
       </ul>
-    </section>
+    <a class="to-top-btn" href="#top" aria-label="Back to top">↑ Top</a></section>
 
     <section id="drops">
       <h2>Global Drops</h2>
@@ -106,7 +204,7 @@
         <li>Onyx Apple</li>
         <li>Subani</li>
       </ul>
-    </section>
+    <a class="to-top-btn" href="#top" aria-label="Back to top">↑ Top</a></section>
 
     <section id="npcs">
       <h2>Key NPCs (Free Market)</h2>
@@ -131,7 +229,7 @@
         <li><strong>Manji</strong> — Daily Kill Quest</li>
         <li><strong>VIP Gachapon</strong> — Chairs / Pets / NX Items</li>
       </ul>
-    </section>
+    <a class="to-top-btn" href="#top" aria-label="Back to top">↑ Top</a></section>
 	
 	    <section id="casino">
       <h2>Casino NPCs (Free Market)</h2>
@@ -144,7 +242,7 @@
         <li><strong>Aaron Kwok</strong> — Slot Machine</li>
       </ul>
       <p><em>Bet and win Chaos Scroll.</em></p>
-    </section>
+    <a class="to-top-btn" href="#top" aria-label="Back to top">↑ Top</a></section>
 
     <section id="qol">
       <h2>Quality of Life</h2>
@@ -156,7 +254,7 @@
         <li><strong>Fishing:</strong> <span class="mono">@fish</span> at FM (Lv150); exchange via Obrin.</li>
         <li><strong>Movement:</strong> Attack while moving; Double Jump enabled (press <span class="mono">F12</span> to toggle OFF for flying mobs).</li>
       </ul>
-    </section>
+    <a class="to-top-btn" href="#top" aria-label="Back to top">↑ Top</a></section>
 
     <section id="cmds">
       <h2>Player Commands (high value)</h2>
@@ -182,7 +280,7 @@
         <li><span class="mono">@fish</span> — Fish at the Free Market (Level 150+).</li>
         <li><span class="mono">@dq</span> / <span class="mono">@dailyquest</span> — Open Daily Quest Menu.</li>
       </ul>
-    </section>
+    <a class="to-top-btn" href="#top" aria-label="Back to top">↑ Top</a></section>
 
     <section id="merit">
       <h2>Merit System (Lv 200+)</h2>
@@ -193,7 +291,7 @@
         <li><strong>Reward:</strong> +1 Ability Point per Merit Level.</li>
         <li>Track with <span class="mono">@merit</span>.</li>
       </ul>
-    </section>
+    <a class="to-top-btn" href="#top" aria-label="Back to top">↑ Top</a></section>
 
     <section id="exped">
       <h2>Expeditions (overview)</h2>
@@ -207,7 +305,7 @@
         <li><strong>Reconnection grace:</strong> 5 minutes if all members disconnect.</li>
         <li><strong>Post-clear grace:</strong> Expedition ends 2 minutes after CLEAR; disconnected players can rejoin to loot within the window.</li>
       </ul>
-    </section>
+    <a class="to-top-btn" href="#top" aria-label="Back to top">↑ Top</a></section>
 
     <footer>
       Tip: Use the in-game <span class="mono">updater.exe</span> whenever possible; only grab full clients when explicitly required.

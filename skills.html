@@ -64,30 +64,98 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-  <style>
-    .tm-nav{position:sticky;top:0;z-index:50;background:rgba(10,15,30,.8);backdrop-filter:saturate(140%) blur(10px);
-      border-bottom:1px solid rgba(148,163,184,.18);}
-    .tm-wrap{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center;justify-content:space-between;}
-    .tm-brand{font-weight:800;letter-spacing:.3px}
-    .tm-links{display:flex;gap:8px;flex-wrap:wrap}
-    .tm-links a{color:inherit;text-decoration:none;border:1px solid rgba(148,163,184,.25);padding:6px 10px;border-radius:999px;font-size:.92rem}
-    .tm-links a:hover{filter:brightness(1.1)}
-  </style>
+<style>
+/* Skills search styling */
+#skill-searchbar{display:flex;gap:8px;align-items:center;margin:10px 0 14px}
+#skillSearch{
+  flex:1; padding:10px 12px; border-radius:12px; border:1px solid var(--border);
+  background:rgba(15,23,42,.85); color:var(--ink);
+  outline:none;
+}
+#skillSearch::placeholder{color:var(--muted)}
+#skillSearch:focus{box-shadow:0 0 0 3px rgba(96,165,250,.25); border-color:#60a5fa}
+#skillClear{padding:10px 12px; border-radius:12px; border:1px solid var(--border);
+  background:linear-gradient(180deg,#17233d,#121a2f); color:#dbeafe; font-weight:700; cursor:pointer}
+#skillClear:hover{filter:brightness(1.06)}
+/* Helper when a table/job has no results */
+.no-results{display:none; padding:10px 12px; border:1px dashed var(--border); border-radius:12px; color:var(--muted); margin:8px 0}
+.hidden{display:none !important}
+</style>
 
+
+<style>
+:root{
+  --bg: #0b0f1a;
+  --panel:#0f172a;
+  --ink:#f8fafc;
+  --muted:#cbd5e1;
+  --border:#243047;
+  --accent:#ff7a00; --accent2:#f59e0b; --accent3:#ef4444; --accent4:#60a5fa;
+  --shadow: 0 18px 50px rgba(0,0,0,.35);
+}
+@media (prefers-color-scheme: light){
+  :root{ --bg:#f5f7fb; --panel:#ffffff; --ink:#0b1220; --muted:#475569; --border:#e2e8f0;
+    --accent:#e76f00; --accent2:#d97706; --accent3:#dc2626; --accent4:#3b82f6; --shadow:0 12px 38px rgba(2,6,23,.08); }
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;}
+a{color:inherit}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 16px 60px}
+/* Top Nav */
+.tm-nav{position:sticky;top:0;z-index:100;background:rgba(12,16,30,.9);backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--border);}
+.tm-row{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center;justify-content:space-between;}
+.tm-brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.3px;color:#fff}
+.tm-dot{width:10px;height:10px;border-radius:50%;background:conic-gradient(from 0deg, var(--accent), var(--accent2), var(--accent3), var(--accent4)); box-shadow:0 0 12px rgba(255,122,0,.8)}
+.tm-links{display:flex;gap:8px;flex-wrap:wrap}
+.tm-links a{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.22);padding:6px 10px;border-radius:999px;font-size:.92rem;background:linear-gradient(180deg,#17233d,#121a2f)}
+.tm-links a:hover{filter:brightness(1.08)}
+/* Panels & Tables (shared helpers) */
+.panel{background:linear-gradient(180deg, color-mix(in oklab, var(--panel) 90%, transparent), var(--panel)); border:1px solid var(--border); border-radius:16px; padding:16px; box-shadow: var(--shadow);}
+.tm-table{width:100%; border-collapse: separate; border-spacing:0; overflow:hidden; border:1px solid var(--border); border-radius:14px; background: color-mix(in oklab, var(--panel) 90%, transparent); box-shadow: var(--shadow);}
+.tm-table thead th{position:sticky; top:0; background:linear-gradient(180deg,#18233c,#121a2f); color:#e5edff; text-align:left; padding:10px 12px; font-weight:800; border-bottom:1px solid var(--border);}
+.tm-table tbody td{padding:10px 12px; border-bottom:1px dashed var(--border); color:var(--ink)}
+.tm-table tbody tr:hover{background:rgba(96,165,250,.06)}
+</style>
+
+<style id="theme-override-skills">
+/* Override theme to match DPS Chart */
+:root{
+  --bg: #0b0f1a;
+  --panel:#0f172a;
+  --ink:#f8fafc;
+  --muted:#cbd5e1;
+  --border:#243047;
+  --accent:#ff7a00; --accent2:#f59e0b; --accent3:#ef4444; --accent4:#60a5fa;
+  --shadow: 0 18px 50px rgba(0,0,0,.35);
+}
+</style>
+<style id="nav-unify">
+/* Unify top nav to match Server Info */
+.tm-nav{position:sticky;top:0;z-index:100;background:rgba(12,16,30,.9);backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--border);}
+.tm-row{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center;justify-content:space-between;}
+.tm-brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.3px;color:#fff}
+.tm-dot{width:10px;height:10px;border-radius:50%;background:conic-gradient(from 0deg, var(--accent), var(--accent2), var(--accent3), var(--accent4)); box-shadow:0 0 12px rgba(255,122,0,.8)}
+.tm-links{display:flex;gap:8px;flex-wrap:wrap}
+.tm-links a{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.22);padding:6px 10px;border-radius:999px;font-size:.92rem;background:linear-gradient(180deg,#17233d,#121a2f)}
+.tm-links a:hover{filter:brightness(1.08)}
+.tm-links a{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.22);padding:6px 10px;border-radius:999px;font-size:.92rem;background:linear-gradient(180deg,#17233d,#121a2f)}
+.tm-links a:hover{filter:brightness(1.08)}
+.tm-links a:hover{filter:brightness(1.08)}
+</style>
 </head>
 <body>
 
-  <nav class="tm-nav">
-    <div class="tm-wrap">
-      <div class="tm-brand">TimelessMS</div>
-      <div class="tm-links">
-        <a href="serverinfo.html">Server Info</a>
-        <a href="skills.html">Skills</a>
-        <a href="dpschart.html">DPS Chart</a>
-        <a href="index.html" title="Home">Home</a>
-      </div>
+<nav class="tm-nav">
+  <div class="tm-row">
+    <div class="tm-brand"><span class="tm-dot"></span> TimelessMS</div>
+    <div class="tm-links">
+      <a href="index.html">Home</a>
+      <a href="serverinfo.html">Server Info</a>
+      <a href="skills.html">Skills</a>
+      <a href="dpschart.html">DPS Chart</a>
     </div>
-  </nav>
+  </div>
+</nav>
 
 <a id="top"></a>
 <div class="topbar">
@@ -4578,5 +4646,93 @@ document.addEventListener('DOMContentLoaded', () => {
 <hr class='sep'>
 </section>
 </div>
+
+<script>
+(function(){
+  const q = document.getElementById('skillSearch');
+  const clearBtn = document.getElementById('skillClear');
+  if(!q){ return; }
+
+  function textOf(el){
+    return (el.textContent || '').toLowerCase();
+  }
+
+  function ensureNoResultPlaceholder(container){
+    let n = container.querySelector('.no-results');
+    if(!n){
+      n = document.createElement('div');
+      n.className = 'no-results';
+      n.textContent = 'No matching skills in this section.';
+      container.appendChild(n);
+    }
+    return n;
+  }
+
+  function filter(){
+    const needle = q.value.trim().toLowerCase();
+    let anyShown = false;
+
+    // 1) Filter block sections (e.g., <section class="skill"> ... </section>)
+    const skillBlocks = Array.from(document.querySelectorAll('section.skill'));
+    if(skillBlocks.length){
+      const parentByJob = new Map();
+      skillBlocks.forEach(b => {
+        const match = textOf(b).includes(needle);
+        b.classList.toggle('hidden', !!needle && !match);
+        if(!needle || match){ anyShown = true; }
+        // Track parent container (closest section/panel) to manage per-job "no results"
+        const parent = b.closest('.panel') || b.parentElement;
+        if(parent){
+          if(!parentByJob.has(parent)) parentByJob.set(parent, {total:0, shown:0, placeholder:null});
+          const rec = parentByJob.get(parent);
+          rec.total++; if(!b.classList.contains('hidden')) rec.shown++;
+          parentByJob.set(parent, rec);
+        }
+      });
+      // Place no-results per parent container
+      parentByJob.forEach((rec, parent)=>{
+        const ph = ensureNoResultPlaceholder(parent);
+        ph.style.display = (rec.shown === 0 && rec.total > 0 && q.value.trim() !== '') ? 'block' : 'none';
+      });
+    }
+
+    // 2) Filter tables (fallback/also)
+    const tables = Array.from(document.querySelectorAll('table'));
+    tables.forEach(tbl => {
+      const rows = Array.from(tbl.querySelectorAll('tbody tr'));
+      if(!rows.length) return;
+      let shown = 0;
+      rows.forEach(tr => {
+        const txt = textOf(tr);
+        const ok = !needle || txt.includes(needle);
+        tr.style.display = ok ? '' : 'none';
+        if(ok) shown++;
+      });
+      // Create / toggle placeholder below table
+      let holder = tbl.nextElementSibling;
+      if(!holder || !holder.classList || !holder.classList.contains('no-results')){
+        holder = document.createElement('div');
+        holder.className = 'no-results';
+        holder.textContent = 'No matching skills in this table.';
+        tbl.parentNode.insertBefore(holder, tbl.nextSibling);
+      }
+      holder.style.display = (shown === 0 && q.value.trim() !== '') ? 'block' : 'none';
+      if(shown > 0){ anyShown = true; }
+    });
+  }
+
+  q.addEventListener('input', filter);
+  if(clearBtn){
+    clearBtn.addEventListener('click', function(){
+      q.value = '';
+      filter();
+      q.focus();
+    });
+  }
+  // Initial run (in case we want to preserve previous query via browser restore)
+  filter();
+})();
+</script>
+
 </body>
 </html>
