@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TimelessMS — Discord</title>
+  
+<style>
+:root{
+  --bg: #0b0f1a;
+  --panel:#0f172a;
+  --ink:#f8fafc;
+  --muted:#cbd5e1;
+  --border:#243047;
+  --accent:#ff7a00; --accent2:#f59e0b; --accent3:#ef4444; --accent4:#60a5fa;
+  --shadow: 0 18px 50px rgba(0,0,0,.35);
+}
+@media (prefers-color-scheme: light){
+  :root{ --bg:#f5f7fb; --panel:#ffffff; --ink:#0b1220; --muted:#475569; --border:#e2e8f0;
+    --accent:#e76f00; --accent2:#d97706; --accent3:#dc2626; --accent4:#3b82f6; --shadow:0 12px 38px rgba(2,6,23,.08); }
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;}
+a{color:inherit}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 16px 60px}
+/* Top Nav */
+.tm-nav{position:sticky;top:0;z-index:100;background:rgba(12,16,30,.9);backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--border);}
+.tm-row{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center;justify-content:space-between;}
+.tm-brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.3px;color:#fff}
+.tm-dot{width:10px;height:10px;border-radius:50%;background:conic-gradient(from 0deg, var(--accent), var(--accent2), var(--accent3), var(--accent4)); box-shadow:0 0 12px rgba(255,122,0,.8)}
+.tm-links{display:flex;gap:8px;flex-wrap:wrap}
+.tm-links a{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.22);padding:6px 10px;border-radius:999px;font-size:.92rem;background:linear-gradient(180deg,#17233d,#121a2f)}
+.tm-links a:hover{filter:brightness(1.08)}
+/* Panels & helpers */
+.panel{background:linear-gradient(180deg, color-mix(in oklab, var(--panel) 90%, transparent), var(--panel)); border:1px solid var(--border); border-radius:16px; padding:16px; box-shadow: var(--shadow);}
+.grid{display:grid;gap:16px;grid-template-columns:1fr 1fr}
+@media (max-width:860px){ .grid{grid-template-columns:1fr} }
+.note{color:var(--muted)}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid var(--border);background:linear-gradient(180deg,#17233d,#121a2f);color:#dbeafe;font-weight:800;text-decoration:none}
+.btn:hover{filter:brightness(1.06)}
+code{background:rgba(15,23,42,.5); padding:2px 6px; border-radius:6px; border:1px solid var(--border)}
+ul.tight>li{margin:6px 0}
+.card{border:1px solid var(--border); border-radius:14px; padding:14px}
+</style>
+
+</head>
+<body>
+
+<nav class="tm-nav">
+  <div class="tm-row">
+    <div class="tm-brand"><span class="tm-dot"></span> TimelessMS</div>
+    <div class="tm-links">
+      <a href="index.html">Home</a>
+      <a href="serverinfo.html">Server Info</a>
+      <a href="skills.html">Skills</a>
+      <a href="dpschart.html">DPS Chart</a>
+      <a href="voting.html">Voting</a>
+      <a href="downloads.html">Downloads</a>
+      <a href="discord.html">Discord</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <section class="panel">
+    <h1>Join our Discord</h1>
+    <p class="note">Get updates, events, and support directly from the community.</p>
+    <p><a class="btn" href="https://discord.com/invite/G3tPavvzb8" target="_blank" rel="noopener">Join Discord →</a></p>
+    <p class="note">Invite link: <code>https://discord.com/invite/G3tPavvzb8</code></p>
+  </section>
+</div>
+</body>
+</html>

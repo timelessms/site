@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TimelessMS — Downloads</title>
+  
+<style>
+:root{
+  --bg: #0b0f1a;
+  --panel:#0f172a;
+  --ink:#f8fafc;
+  --muted:#cbd5e1;
+  --border:#243047;
+  --accent:#ff7a00; --accent2:#f59e0b; --accent3:#ef4444; --accent4:#60a5fa;
+  --shadow: 0 18px 50px rgba(0,0,0,.35);
+}
+@media (prefers-color-scheme: light){
+  :root{ --bg:#f5f7fb; --panel:#ffffff; --ink:#0b1220; --muted:#475569; --border:#e2e8f0;
+    --accent:#e76f00; --accent2:#d97706; --accent3:#dc2626; --accent4:#3b82f6; --shadow:0 12px 38px rgba(2,6,23,.08); }
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;}
+a{color:inherit}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 16px 60px}
+/* Top Nav */
+.tm-nav{position:sticky;top:0;z-index:100;background:rgba(12,16,30,.9);backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--border);}
+.tm-row{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center;justify-content:space-between;}
+.tm-brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.3px;color:#fff}
+.tm-dot{width:10px;height:10px;border-radius:50%;background:conic-gradient(from 0deg, var(--accent), var(--accent2), var(--accent3), var(--accent4)); box-shadow:0 0 12px rgba(255,122,0,.8)}
+.tm-links{display:flex;gap:8px;flex-wrap:wrap}
+.tm-links a{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.22);padding:6px 10px;border-radius:999px;font-size:.92rem;background:linear-gradient(180deg,#17233d,#121a2f)}
+.tm-links a:hover{filter:brightness(1.08)}
+/* Panels & helpers */
+.panel{background:linear-gradient(180deg, color-mix(in oklab, var(--panel) 90%, transparent), var(--panel)); border:1px solid var(--border); border-radius:16px; padding:16px; box-shadow: var(--shadow);}
+.grid{display:grid;gap:16px;grid-template-columns:1fr 1fr}
+@media (max-width:860px){ .grid{grid-template-columns:1fr} }
+.note{color:var(--muted)}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid var(--border);background:linear-gradient(180deg,#17233d,#121a2f);color:#dbeafe;font-weight:800;text-decoration:none}
+.btn:hover{filter:brightness(1.06)}
+code{background:rgba(15,23,42,.5); padding:2px 6px; border-radius:6px; border:1px solid var(--border)}
+ul.tight>li{margin:6px 0}
+.card{border:1px solid var(--border); border-radius:14px; padding:14px}
+</style>
+
+</head>
+<body>
+
+<nav class="tm-nav">
+  <div class="tm-row">
+    <div class="tm-brand"><span class="tm-dot"></span> TimelessMS</div>
+    <div class="tm-links">
+      <a href="index.html">Home</a>
+      <a href="serverinfo.html">Server Info</a>
+      <a href="skills.html">Skills</a>
+      <a href="dpschart.html">DPS Chart</a>
+      <a href="voting.html">Voting</a>
+      <a href="downloads.html">Downloads</a>
+      <a href="discord.html">Discord</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <section class="panel">
+    <h1>How to Download &amp; Play TimelessMS v83</h1>
+    <p class="note">Welcome to TimelessMS — a nostalgic MapleStory v83 private server! Follow these steps to get started:</p>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Step 1: Download the Client</h2>
+        <p><strong>Full Client 0.23a</strong></p>
+        <ul class="tight">
+          <li>Link 1: <a class="btn" href="https://drive.google.com/file/d/10Lsxkbzg6XxWUp3607fhCG0Ild_G7nEj/view?usp=sharing" target="_blank" rel="noopener">Google Drive</a></li>
+          <li>Link 2: <a class="btn" href="https://drive.google.com/file/d/1rReyUFSG4vcoFkrI0ua2c9t7Ky5Y9gK7/view?usp=sharing" target="_blank" rel="noopener">Google Drive Alt</a></li>
+          <li>Link 3: <a class="btn" href="https://mega.nz/file/iLIzjZAb#SeAoP2e2z8Jf6DIoBMc0AILobfQnrI3uBX9CkLpeCFI" target="_blank" rel="noopener">MEGA</a></li>
+          <li>Link 4: <a class="btn" href="https://transfer.it/t/fx2NbPgRwL7b" target="_blank" rel="noopener">Transfer.it</a></li>
+        </ul>
+        <p class="note"><strong>Before downloading:</strong> Right-click the file → click <em>Keep</em> or <em>Allow</em> if your browser warns you. This is a false positive due to encryption methods used in private servers.</p>
+      </div>
+
+      <div class="card">
+        <h2>Step 2: Extract the Files</h2>
+        <ul class="tight">
+          <li>Use <strong>WinRAR</strong> or <strong>7-Zip</strong> to extract the downloaded <code>.zip</code> file.</li>
+          <li>Extract everything to a new folder (e.g., <code>C:\MapleStory</code>).</li>
+          <li><strong>Do NOT</strong> run the game from inside the zip file!</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Step 3: Run the Game</h2>
+        <ul class="tight">
+          <li>Double-click <strong>client.exe</strong> to start the game.</li>
+          <li>Log in with your registered <strong>username &amp; password</strong>.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Step 4: Optional Fixes</h2>
+        <h3>Windows Defender Issues?</h3>
+        <p>Add the MapleStory folder to your antivirus/defender exceptions list.</p>
+        <h3>White screen or crash?</h3>
+        <p>Right-click <strong>client.exe</strong> → <em>Properties</em> → <em>Compatibility</em> tab:</p>
+        <ul class="tight">
+          <li>Check “Run this program in compatibility mode” for <strong>Windows XP (SP2)</strong>.</li>
+          <li>Also check “<strong>Run as Administrator</strong>”.</li>
+        </ul>
+        <h3>Firewall Blocked?</h3>
+        <p>Allow <strong>client.exe</strong> through Windows Firewall, or temporarily turn it off to test.</p>
+      </div>
+    </div>
+  </section>
+</div>
+</body>
+</html>
