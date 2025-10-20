@@ -72,6 +72,7 @@ nav.quick a:hover{filter:brightness(1.08)}
 footer{margin-top:28px;padding-top:12px;color:var(--muted);font-size:.9rem;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;border-top:1px dashed var(--border)}
 </style>
 
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -98,27 +99,23 @@ footer{margin-top:28px;padding-top:12px;color:var(--muted);font-size:.9rem;displ
     <div class="wrap">
     <header>
       <h1>TimelessMS — DPS Overview</h1>
-      <div class="meta">Last updated: 10 Oct 2025 (GMT+8)</div>
+      <div class="meta">Last updated: 20 Oct 2025 (GMT+8)</div>
 	  <br/>
     </header>
 
-    <div class="table-wrap">
-      <table class="tm-table" id="dpsTable">
-        <thead>
-          <tr>
-            <th class="sortable" data-key="job">Job <span class="dir">⇅</span></th>
-            <th>Single Skill</th>
-            <th class="sortable" data-key="singleDps">Single DPS <span class="dir">⇅</span></th>
-            <th>Multi Skill</th>
-            <th class="sortable" data-key="multiDps">Multi DPS <span class="dir">⇅</span></th>
-            <th class="sortable" data-key="targets">Targets <span class="dir">⇅</span></th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
+    
+<div class="panel" id="single-target-panel">
+  <h2 style="margin:0 0 8px;">Single‑Target (normalized vs. average = 1.0)</h2>
+  <canvas id="singleChart" height="100"></canvas>
+  <p class="muted" style="margin:8px 0 0;">Each bar shows a job's single‑target DPS divided by the average across all jobs.</p>
+</div>
 
-    <p class="note">Note: Buffed with Echo, Speed Infusion, Maple Warrior, Sharp Eyes, Bless. Fully Scrolled Empress Gear.</p>
+<div class="panel" id="multi-target-panel" style="margin-top:14px;">
+  <h2 style="margin:0 0 8px;">Multi‑Target (normalized vs. average = 1.0)</h2>
+  <canvas id="multiChart" height="100"></canvas>
+  <p class="muted" style="margin:8px 0 0;">For each job, effective DPS is scaled by <code>min(mobs, targets)/targets</code> where <em>targets</em> is the job's maximum hit count. Series shown for 2, 4, 6, 8 mobs.</p>
+</div>
+<p class="note">Note: Buffed with Echo, Speed Infusion, Maple Warrior, Sharp Eyes, Bless. Fully Scrolled Empress Gear.</p>
     
 
     <footer>
@@ -127,117 +124,122 @@ footer{margin-top:28px;padding-top:12px;color:var(--muted);font-size:.9rem;displ
     </footer>
   </div>
 
-  <script>
-    const rawData = [
-      { job: 'Corsair',       singleSkill: 'Battleship Cannon+Bullseye', singleDps: '6,200,000',  multiSkill: 'Battleship Torpedo',         multiDps: '15,000,000', targets: 6 },
-      { job: 'Night Lord',    singleSkill: 'Shuriken Barrage',                  singleDps: '6,000,000',  multiSkill: 'Sudden Raid',                multiDps: '15,600,000', targets: 5 },
-	  { job: 'Thunder Breaker',    singleSkill: 'Shark Tooth',                  singleDps: '5,900,000',  multiSkill: 'Shark Show',                multiDps: '15,900,000', targets: 6 },
-	  { job: 'Night Walker',    singleSkill: 'Shuriken Barrage',                  singleDps: '5,800,000',  multiSkill: 'Shadow Bite',                multiDps: '16,200,000', targets: 6 },
-      { job: 'Bowmaster',     singleSkill: 'Hurricane',                   singleDps: '5,800,000',  multiSkill: 'Dragon Breath',              multiDps: '16,200,000', targets: 6 },
-      { job: 'Buccaneer',     singleSkill: 'Demolition',                  singleDps: '5,800,000',  multiSkill: 'Dragon Blast + Snatch',      multiDps: '16,200,000', targets: 6 },
-      { job: 'Hero',          singleSkill: 'Blade Tempest',               singleDps: '5,700,000',  multiSkill: 'Brandish',                   multiDps: '16,500,000', targets: 4 },
-	  { job: 'Dawn Warrior',    singleSkill: 'Intrepid Slash',                  singleDps: '5,600,000',  multiSkill: 'Intrepid Slash',                multiDps: '16,800,000', targets: 3 },
-      { job: 'Dark Knight',   singleSkill: 'Chaos Skewer',                singleDps: '5,600,000',  multiSkill: 'Dark Impale',                multiDps: '16,800,000', targets: 5 },
-	  { job: 'Wind Archer',    singleSkill: 'Zephyr Barrage',                  singleDps: '5,600,000',  multiSkill: 'Gale Lance',                multiDps: '16,800,000', targets: 6 },
-      { job: 'Shadower',      singleSkill: 'Assassinate',                 singleDps: '5,600,000',  multiSkill: 'Boomerang Step + B.O.T.',    multiDps: '16,800,000', targets: 6 },
-      { job: 'Paladin',       singleSkill: 'Righteous Maulstorm',         singleDps: '5,500,000',  multiSkill: 'Blast + Holy charge',        multiDps: '17,100,000', targets: 6 },
-      { job: 'Marksman',      singleSkill: 'Snipe',                       singleDps: '5,400,000',  multiSkill: 'Piercing Arrow',             multiDps: '17,400,000', targets: 4 },
-	  { job: 'Blaze Wizard',    singleSkill: 'Inferno Blast',                  singleDps: '5,400,000',  multiSkill: 'Orbital Flame',                multiDps: '17,400,000', targets: 6 },
-      { job: 'F/P',           singleSkill: 'Poison Flare',                singleDps: '5,200,000',  multiSkill: 'Blazing Judgement',          multiDps: '18,000,000', targets: 6 },
-      { job: 'I/L',           singleSkill: 'Thunderclap',                 singleDps: '5,200,000',  multiSkill: 'Ice Age',                    multiDps: '18,000,000', targets: 6 },
-      { job: 'Bishop',        singleSkill: 'Angel Ray',                   singleDps: '5,000,000',  multiSkill: 'Angelic Buster',             multiDps: '18,600,000', targets: 6 },
-      { job: 'Aran',          singleSkill: 'Overswing + Final Blow',      singleDps: '5,600,000',  multiSkill: 'Overswing + Final Blow',     multiDps: '20,000,000', targets: 8 },
-      { job: 'Super Beginner',singleSkill: 'Mop Swinging',                singleDps: '9,000,000',  multiSkill: '',                           multiDps: '',          targets: '' },
-    ];
+  <blockquote class="imgur-embed-pub" lang="en" data-id="lZpSJ7Q"><a href="https://imgur.com/lZpSJ7Q">View post on imgur.com</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
 
-    const tbody = document.querySelector('#dpsTable tbody');
-    const q = document.querySelector('#q');
-    const rowsCount = document.querySelector('#rowsCount');
+<script>
+const DPS_DATA = window.DPS_DATA || [
+  { job: "Corsair", singleDps: 6200000, multiDps: 15000000, targets: 6 },
+  { job: "Night Lord", singleDps: 6000000, multiDps: 15600000, targets: 5 },
+  { job: "Thunder Breaker", singleDps: 5900000, multiDps: 15900000, targets: 6 },
+  { job: "Night Walker", singleDps: 5800000, multiDps: 16200000, targets: 6 },
+  { job: "Bowmaster", singleDps: 5800000, multiDps: 16200000, targets: 6 },
+  { job: "Buccaneer", singleDps: 5800000, multiDps: 16200000, targets: 6 },
+  { job: "Hero", singleDps: 5700000, multiDps: 16500000, targets: 4 },
+  { job: "Dawn Warrior", singleDps: 5600000, multiDps: 16800000, targets: 3 },
+  { job: "Dark Knight", singleDps: 5600000, multiDps: 16800000, targets: 5 },
+  { job: "Wind Archer", singleDps: 5600000, multiDps: 16800000, targets: 6 },
+  { job: "Shadower", singleDps: 5600000, multiDps: 16800000, targets: 6 },
+  { job: "Paladin", singleDps: 5500000, multiDps: 17100000, targets: 6 },
+  { job: "Marksman", singleDps: 5400000, multiDps: 17400000, targets: 4 },
+  { job: "Blaze Wizard", singleDps: 5400000, multiDps: 17400000, targets: 6 },
+  { job: "F/P", singleDps: 5200000, multiDps: 18000000, targets: 6 },
+  { job: "I/L", singleDps: 5200000, multiDps: 18000000, targets: 6 },
+  { job: "Bishop", singleDps: 5000000, multiDps: 18600000, targets: 6 },
+  { job: "Aran", singleDps: 5600000, multiDps: 20000000, targets: 8 }
+];
 
-    function parseNumber(str) {
-      if (typeof str === 'number') return str;
-      if (!str) return NaN;
-      return Number(String(str).replace(/[^0-9.-]/g, ''));
+function mean(nums){ return nums.length ? nums.reduce((a,b)=>a+b,0)/nums.length : 0; }
+
+const singleVals = DPS_DATA.map(x => x.singleDps || 0);
+const singleAvg = (function(v){ const m = mean(v); return m === 0 ? 1 : m; })(singleVals);
+const singleLabels = DPS_DATA.map(x => x.job);
+const singleNorm = DPS_DATA.map(x => (x.singleDps || 0) / singleAvg);
+
+const K = [2,4,6,8];
+function effectiveMulti(x, k){
+  const t = Math.max(1, x.targets || 1);
+  const scale = Math.min(k, t) / t;
+  return (x.multiDps || 0) * scale;
+}
+const multiRawByK = K.map(k => DPS_DATA.map(x => effectiveMulti(x, k)));
+const multiAvgByK = multiRawByK.map(arr => { const m = mean(arr); return m === 0 ? 1 : m; });
+const multiNormByK = multiRawByK.map((arr, idx) => arr.map(v => v / multiAvgByK[idx]));
+
+const singleCtx = document.getElementById('singleChart').getContext('2d');
+new Chart(singleCtx, { type: 'line',
+  data: {
+    labels: singleLabels,
+    datasets: [{
+      label: 'Single‑Target / Average',
+      data: singleNorm,
+      borderWidth: 1
+    }]
+  },
+  options: {
+      elements: { line: { fill: false }, point: { radius: 2 } },
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: (ctx) => {
+            const idx = ctx.dataIndex;
+            const raw = singleVals[idx];
+            const ratio = ctx.parsed.y;
+            return `${DPS_DATA[idx].job}: ${ratio.toFixed(2)}× (raw ${raw.toLocaleString()})`;
+          }
+        }
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: false,
+        suggestedMax: 1.2,
+        ticks: { stepSize: 0.1, callback: v => v.toFixed ? v.toFixed(1) : v }
+      }
     }
+  }
+});
 
-    function render(data) {
-      tbody.innerHTML = data.map(r => `
-        <tr>
-          <td>${r.job || '—'}</td>
-          <td>${r.singleSkill || '—'}</td>
-          <td data-sort="${parseNumber(r.singleDps)}">${r.singleDps || '—'}</td>
-          <td>${r.multiSkill || '—'}</td>
-          <td data-sort="${parseNumber(r.multiDps)}">${r.multiDps || '—'}</td>
-          <td data-sort="${Number.isFinite(+r.targets) ? r.targets : -1}">${r.targets || '—'}</td>
-        </tr>`).join('');
-      rowsCount.textContent = `${data.length} row${data.length === 1 ? '' : 's'}`;
+const multiCtx = document.getElementById('multiChart').getContext('2d');
+new Chart(multiCtx, { type: 'line',
+  data: {
+    labels: DPS_DATA.map(x => x.job),
+    datasets: [2,4,6,8].map((k, i) => ({
+      label: `${k} mobs`,
+      data: multiNormByK[i],
+      borderWidth: 1
+    }))
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'top' },
+      tooltip: {
+        callbacks: {
+          label: (ctx) => {
+            const K = [2,4,6,8];
+            const k = K[ctx.datasetIndex];
+            const idx = ctx.dataIndex;
+            const eff = multiRawByK[ctx.datasetIndex][idx];
+            const ratio = ctx.parsed.y;
+            const t = DPS_DATA[idx].targets || 1;
+            return `${k} mobs: ${ratio.toFixed(2)}× (eff ${eff.toLocaleString()}, targets=${t})`;
+          }
+        }
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: false,
+        suggestedMax: 1.6,
+        ticks: { callback: v => v.toFixed ? v.toFixed(1) : v }
+      }
     }
+  }
+});
+</script>
 
-    // initial
-    let current = [...rawData];
-    render(current);
-
-    // search
-    q.addEventListener('input', () => {
-      const v = q.value.trim().toLowerCase();
-      current = rawData.filter(r =>
-        [r.job, r.singleSkill, r.singleDps, r.multiSkill, r.multiDps, String(r.targets)]
-          .filter(Boolean)
-          .some(x => String(x).toLowerCase().includes(v))
-      );
-      render(current);
-    });
-
-    // reset
-    document.querySelector('#resetBtn').addEventListener('click', () => {
-      q.value = '';
-      current = [...rawData];
-      render(current);
-      // clear sort indicators
-      document.querySelectorAll('th.sortable').forEach(th => th.dataset.dir = '');
-    });
-
-    // sorting
-    const ths = document.querySelectorAll('th.sortable');
-    ths.forEach(th => {
-      th.addEventListener('click', () => {
-        const key = th.dataset.key;
-        const dir = th.dataset.dir === 'asc' ? 'desc' : 'asc';
-        ths.forEach(t => t.dataset.dir = '');
-        th.dataset.dir = dir;
-
-        const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
-        current.sort((a, b) => {
-          let av, bv;
-          if (key === 'singleDps') { av = parseNumber(a.singleDps); bv = parseNumber(b.singleDps); }
-          else if (key === 'multiDps') { av = parseNumber(a.multiDps); bv = parseNumber(b.multiDps); }
-          else if (key === 'targets') { av = Number.isFinite(+a.targets) ? +a.targets : -1; bv = Number.isFinite(+b.targets) ? +b.targets : -1; }
-          else { av = a[key] ?? ''; bv = b[key] ?? ''; }
-          const cmp = (typeof av === 'number' && typeof bv === 'number') ? (av - bv) : collator.compare(String(av), String(bv));
-          return dir === 'asc' ? cmp : -cmp;
-        });
-        render(current);
-      });
-    });
-
-    // CSV download
-    function toCsvValue(v) {
-      if (v == null) return '';
-      const s = String(v);
-      return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
-    }
-    document.getElementById('downloadCsv').addEventListener('click', () => {
-      const head = ['Job','Single Skill','Single DPS','Multi Skill','Multi DPS','Targets'];
-      const rows = current.map(r => [r.job, r.singleSkill, r.singleDps, r.multiSkill, r.multiDps, r.targets]);
-      const csv = [head, ...rows].map(row => row.map(toCsvValue).join(',')).join('\n');
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = 'timelessms-dps.csv';
-      document.body.appendChild(a); a.click(); a.remove();
-      URL.revokeObjectURL(url);
-    });
-  </script>
 </body>
 
 </html>
