@@ -153,7 +153,7 @@ const singleAvg = (function(v){ const m = mean(v); return m === 0 ? 1 : m; })(si
 const singleLabels = DPS_DATA.map(x => x.job);
 const singleNorm = DPS_DATA.map(x => (x.singleDps || 0) / singleAvg);
 
-const K = [2,4,6,8];
+const K = [4,6,8];
 function effectiveMulti(x, k){
   const t = Math.max(1, x.targets || 1);
   const scale = Math.min(k, t) / t;
@@ -203,7 +203,7 @@ const multiCtx = document.getElementById('multiChart').getContext('2d');
 new Chart(multiCtx, { type: 'line',
   data: {
     labels: DPS_DATA.map(x => x.job),
-    datasets: [2,4,6,8].map((k, i) => ({
+    datasets: [4,6,8].map((k, i) => ({
       label: `${k} mobs`,
       data: multiNormByK[i],
       borderWidth: 1
@@ -216,7 +216,7 @@ new Chart(multiCtx, { type: 'line',
       tooltip: {
         callbacks: {
           label: (ctx) => {
-            const K = [2,4,6,8];
+            const K = [4,6,8];
             const k = K[ctx.datasetIndex];
             const idx = ctx.dataIndex;
             const eff = multiRawByK[ctx.datasetIndex][idx];
