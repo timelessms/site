@@ -99,7 +99,7 @@ footer{margin-top:28px;padding-top:12px;color:var(--muted);font-size:.9rem;displ
     <div class="wrap">
     <header>
       <h1>TimelessMS — DPS Overview</h1>
-      <div class="meta">Last updated: 20 Oct 2025 (GMT+8)</div>
+      <div class="meta">Last updated: 26th Nov 2025 (GMT+8)</div>
 	  <br/>
     </header>
 
@@ -113,7 +113,7 @@ footer{margin-top:28px;padding-top:12px;color:var(--muted);font-size:.9rem;displ
 <div class="panel" id="multi-target-panel" style="margin-top:14px;">
   <h2 style="margin:0 0 8px;">Multi‑Target (normalized vs. average = 1.0)</h2>
   <canvas id="multiChart" height="100"></canvas>
-  <p class="muted" style="margin:8px 0 0;">For each job, effective DPS is scaled by <code>min(mobs, targets)/targets</code> where <em>targets</em> is the job's maximum hit count. Series shown for 2, 4, 6, 8 mobs.</p>
+  <p class="muted" style="margin:8px 0 0;">For each job, effective DPS is scaled by <code>min(mobs, targets)/targets</code> where <em>targets</em> is the job's maximum hit count. Series shown for 4, 6 mobs.</p>
 </div>
 <p class="note">Note: Buffed with Echo, Speed Infusion, Maple Warrior, Sharp Eyes, Bless. Fully Scrolled Empress Gear.</p>
     
@@ -155,7 +155,7 @@ const singleAvg = (function(v){ const m = mean(v); return m === 0 ? 1 : m; })(si
 const singleLabels = DPS_DATA.map(x => x.job);
 const singleNorm = DPS_DATA.map(x => (x.singleDps || 0) / singleAvg);
 
-const K = [4,6,8];
+const K = [4,6];
 function effectiveMulti(x, k){
   const t = Math.max(1, x.targets || 1);
   const scale = Math.min(k, t) / t;
